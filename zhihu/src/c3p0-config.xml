@@ -41,7 +41,7 @@
 		</property>
 		<!-- intergalactoApp adopts a different approach to configuring statement 
 			caching -->
-		<property name="maxStatements">0</property>
+		<property name="maxStatements">1</property>
 		<!--maxStatementsPerConnection定义了连接池内单个连接所拥有的最大缓存statements数。Default: 0 -->
 		<property name="maxStatementsPerConnection">5</property>
 		<!-- he's important, but there's only one of him -->
@@ -49,7 +49,7 @@
 			<!--当连接池中的连接耗尽的时候c3p0一次同时获取的连接数。Default: 3 -->
 			<property name="acquireIncrement">3</property>
 			<property name="initialPoolSize">1</property>
-			<property name="minPoolSize">1</property>
+			<property name="minPoolSize"></property>
 			<property name="maxPoolSize">5</property>
 			<property name="maxStatementsPerConnection">50</property>
 		</user-overrides>

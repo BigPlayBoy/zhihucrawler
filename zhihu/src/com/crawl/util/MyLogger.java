@@ -15,7 +15,7 @@ public class MyLogger extends Logger{
         Properties p = new Properties();
         String ip = null;
         try {
-            p.load(MyLogger.class.getResourceAsStream("/resources/log4j.properties"));
+            p.load(MyLogger.class.getResourceAsStream("/log4j.properties"));
             InetAddress addr = InetAddress.getLocalHost();
             ip = addr.getHostAddress().toString(); //获取本机ip
         } catch (IOException e) {
@@ -28,8 +28,8 @@ public class MyLogger extends Logger{
             p.setProperty("log4j.appender.logfile.Threshold","ERROR");
         }else{
             //运行在本地,日志只需输出到控制台
-//            p.setProperty("log4j.rootLogger","INFO,stdout,logfile");
-//            p.setProperty("log4j.appender.logfile.Threshold","INFO");
+            p.setProperty("log4j.rootLogger","INFO,stdout,logfile");
+            p.setProperty("log4j.appender.logfile.Threshold","INFO");
         }
         return p;
     }

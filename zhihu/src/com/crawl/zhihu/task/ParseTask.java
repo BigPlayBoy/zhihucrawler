@@ -13,6 +13,9 @@ import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -45,19 +48,11 @@ public class ParseTask implements Runnable {
              *  包含title标签,用户主页
              */
             User u = ZhiHuUserIndexDetailPageParser.getInstance().parse(page);
-            Connection connection=null;
             try {
-                 connection= JDBCTools.getConnection();
-//                if(ZhihuDAO.insetToDB(connection,u));
-
-            } catch (Exception e) {
+                writeToDisk(u.toString(),new File("src/resources/user.txt"),true);
+                logger.info("保存信息成功");
+            } catch (IOException e) {
                 e.printStackTrace();
-            }finally {
-                try {
-                    connection.isClosed();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
             }
             parseUserCount.incrementAndGet();
             logger.info("解析用户成功:" + u.toString());
@@ -86,6 +81,12 @@ public class ParseTask implements Runnable {
                 }
             }
         }
+    }
+    private static void writeToDisk(String string, File file, boolean isAppend) throws IOException {
+        FileWriter fileWriter=new FileWriter(file,isAppend);
+        fileWriter.write(string+"\n");
+        fileWriter.flush();
+        fileWriter.close();
     }
     public String formatUserFolloweesUrl(int offset, String userHashId){
         String url = "https://www.zhihu.com/node/ProfileFolloweesListV2?params={%22offset%22:" + offset + ",%22order_by%22:%22created%22,%22hash_id%22:%22" + userHashId + "%22}";
